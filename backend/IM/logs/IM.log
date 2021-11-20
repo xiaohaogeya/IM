@@ -1,0 +1,33 @@
+2021/11/20 19:58:59.308  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:08:53.518  [I] [main.go:28]  hello, world
+2021/11/20 20:08:53.523  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:08:53.523  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:09:11.877  [I] [main.go:28]  hello, world
+2021/11/20 20:09:11.881  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:09:11.881  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:09:53.793  [I] [main.go:28]  hello, world
+2021/11/20 20:09:53.797  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:09:53.797  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:10:17.703  [E] [main.go:28]  hello, world
+2021/11/20 20:10:17.707  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:10:17.707  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:10:33.031  [E] [main.go:28]  hello, world
+2021/11/20 20:10:33.035  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:10:33.035  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:10:47.856  [E] [main.go:28]  hello, world
+2021/11/20 20:10:47.860  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:10:47.860  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:10:59.459  [E] [main.go:28]  hello, world
+2021/11/20 20:10:59.463  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:10:59.463  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:16:27.968  [E] [main.go:28]  hello, world
+2021/11/20 20:16:27.972  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:16:27.972  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:16:42.057  [D] [router.go:955]  |      127.0.0.1|[97;43m 404 [0m|    290.209µs| nomatch|[97;44m GET     [0m /  
+2021/11/20 20:18:15.610  [E] [main.go:27]  hello, world
+2021/11/20 20:18:15.615  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:18:15.615  [I] [server.go:241]  http server Running on http://:8080
+2021/11/20 20:18:30.485  [D] [router.go:955]  |      127.0.0.1|[97;43m 404 [0m|    327.304µs| nomatch|[97;44m GET     [0m /  
+2021/11/20 20:22:02.096  [E] [main.go:27]  hello, world
+2021/11/20 20:22:02.101  [I] [parser.go:85]  /Users/xiaohaoge/Desktop/myProjects/IM/backend/IM/controllers no changed
+2021/11/20 20:22:02.101  [I] [server.go:241]  http server Running on http://:8080
