@@ -1,0 +1,27 @@
+{
+  "app_name": "IM",
+  "app_model": "debug",
+  "app_host": "localhost",
+  "app_port": "8080",
+  "secret_key": "qDQiIDVCT+OBTVdaZtllXgSZhj1oTkTsj7axueCt8rs=",
+  "read_timeout": 5,
+  "write_timeout": 5,
+  "database": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "password",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "db_name": "gin-im",
+    "charset": "utf8"
+  },
+  "redis_config": {
+    "addr": "127.0.0.1",
+    "port": "6379",
+    "password": "123456",
+    "db": 0
+  },
+  "jwt": {
+    "expire_at": 30
+  }
+}
