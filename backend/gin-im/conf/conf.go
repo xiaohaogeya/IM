@@ -21,14 +21,16 @@ type Config struct {
 
 // DatabaseConfig 数据库属性定义
 type DatabaseConfig struct {
-	Driver   string `json:"driver"`
-	User     string `json:"user"`
-	Password string `json:"password"`
-	Host     string `json:"host"`
-	Port     string `json:"port"`
-	DbName   string `json:"db_name"`
-	ChartSet string `json:"charset"`
-	ShowSql  bool   `json:"show_sql"`
+	Driver            string `json:"driver"`
+	User              string `json:"user"`
+	Password          string `json:"password"`
+	Host              string `json:"host"`
+	Port              string `json:"port"`
+	DbName            string `json:"db_name"`
+	ChartSet          string `json:"charset"`
+	ShowSql           bool   `json:"show_sql"`
+	SetMaxIdleConnNum int    `json:"set_max_idle_conn_num"`
+	SetMaxOpenConnNum int    `json:"set_max_open_conn_num"`
 }
 
 // RedisConfig Redis属性定义

@@ -1,22 +1,41 @@
 package controllers
 
 import (
+	"gin-im/auth"
+	"gin-im/db"
 	"gin-im/models"
-	"gin-im/utils"
 	"github.com/gin-gonic/gin"
 )
 
-func Get(c *gin.Context) {
-	user := &models.User{
-		Id: 1,
+type UserController struct {
+	BaseController
+}
+
+// Login 登录
+func (c *UserController) Login(ctx *gin.Context) {
+	form := struct {
+		UserName string `form:"username" binding:"required"`
+		Password string `form:"password" binding:"required"`
+	}{}
+
+	if err := ctx.ShouldBind(&form); err != nil {
+		c.Error(ctx, "400001")
+		return
 	}
-	token, _ := utils.GenerateToken(user)
-	c.JSON(200, gin.H{
-		"message": "pong",
-		"data": map[string]interface{}{
-			"id":    1,
-			"name":  "小浩",
-			"token": token,
-		},
-	})
+
+	user := &models.User{
+		UserName: form.UserName,
+	}
+	db.DB.Find(user)
+
+	if user.ID == 0 || !user.ValidatePassword(form.Password){
+		c.Error(ctx, "400002")
+		return
+	}
+
+	token, _ := auth.GenerateToken(user)
+	data := make(map[string]interface{})
+	data["token"] = token
+	data["user"] = user
+	c.Success(ctx, data)
 }

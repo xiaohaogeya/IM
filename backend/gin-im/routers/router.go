@@ -34,7 +34,10 @@ var (
 )
 
 func Run() {
-	adminRouter()
+
+	wsRouter()
+	userRouter()
+
 	s := &http.Server{
 		Addr:           ":" + conf.AppConfig.AppPort,
 		Handler:        router(),

@@ -1,4 +1,4 @@
-package utils
+package auth
 
 import (
 	"errors"
@@ -21,19 +21,19 @@ var (
 func init() {
 	_ = conf.InitConfig()
 	ExpireAt = time.Hour * 24 * time.Duration(conf.AppConfig.JWT.ExpireAt) // 过期30天
-	SecretKey = conf.AppConfig.SecretKey                                  // 密钥
+	SecretKey = conf.AppConfig.SecretKey                                   // 密钥
 }
 
 // GenerateToken 获取jwt token
 func GenerateToken(user *models.User) (tokenString string, err error) {
 	mySigningKey := []byte(SecretKey)
-	expireAt := time.Now().Add(time.Second * time.Duration(ExpireAt)).Unix()
+	expireAt := time.Now().Add(time.Second * ExpireAt).Unix()
 	newUser := *user
 	claims := MyCustomClaims{
 		newUser,
 		jwt.StandardClaims{
 			ExpiresAt: expireAt,
-			Issuer:    string(rune(user.Id)),
+			Issuer:    string(rune(user.ID)),
 			IssuedAt:  time.Now().Unix(),
 		},
 	}
