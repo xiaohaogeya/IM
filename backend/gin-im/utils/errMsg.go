@@ -1,4 +1,8 @@
-package controllers
+package utils
+
+/*
+	错误信息
+*/
 
 type ErrMsg struct {
 }

@@ -38,7 +38,7 @@ var Manager = ClientManager{
 	Clients:    make(map[string]*Client),
 }
 
-// Start is  项目运行前, 协程开启start -> go Manager.Start()
+// Start  监听
 func (manager *ClientManager) Start() {
 	for {
 		log.Println("<---管道通信--->")
@@ -57,10 +57,10 @@ func (manager *ClientManager) Start() {
 				delete(Manager.Clients, conn.ID)
 			}
 		case message := <-Manager.Broadcast:
-			MessageStruct :=Message{}
-			json.Unmarshal(message, &MessageStruct)
+			MessageStruct := Message{}
+			_ = json.Unmarshal(message, &MessageStruct)
 			for id, conn := range Manager.Clients {
-				if id!=creatId(MessageStruct.Recipient,MessageStruct.Sender){
+				if id != creatId(MessageStruct.Recipient, MessageStruct.Sender) {
 					continue
 				}
 				select {
@@ -73,8 +73,8 @@ func (manager *ClientManager) Start() {
 		}
 	}
 }
-func creatId(uid,touid string) string {
-	return uid+"_"+touid
+func creatId(uid, touid string) string {
+	return uid + "_" + touid
 }
 func (c *Client) Read() {
 	defer func() {
@@ -127,7 +127,7 @@ func WsHandler(c *gin.Context) {
 	}
 	//可以添加用户信息验证
 	client := &Client{
-		ID:    creatId(uid,touid),
+		ID:     creatId(uid, touid),
 		Socket: conn,
 		Send:   make(chan []byte),
 	}
@@ -135,4 +135,3 @@ func WsHandler(c *gin.Context) {
 	go client.Read()
 	go client.Write()
 }
-

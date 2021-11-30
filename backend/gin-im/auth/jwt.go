@@ -19,7 +19,6 @@ var (
 )
 
 func init() {
-	_ = conf.InitConfig()
 	ExpireAt = time.Hour * 24 * time.Duration(conf.AppConfig.JWT.ExpireAt) // 过期30天
 	SecretKey = conf.AppConfig.SecretKey                                   // 密钥
 }

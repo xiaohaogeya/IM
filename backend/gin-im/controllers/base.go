@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"gin-im/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -15,7 +16,7 @@ func (c *BaseController) Success(ctx *gin.Context, data interface{}) {
 
 // Error 失败请求默认状态码为400；并附带有err信息
 func (c *BaseController) Error(ctx *gin.Context, code string) {
-	errMsg := ErrMsg{}
+	errMsg := utils.ErrMsg{}
 	msg := errMsg.String(code)
-	ctx.JSON(http.StatusBadRequest, gin.H{"msg": msg, "code": code, "data": ""})
+	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"msg": msg, "code": code, "data": ""})
 }

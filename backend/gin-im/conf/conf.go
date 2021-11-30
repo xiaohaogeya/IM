@@ -64,3 +64,10 @@ func InitConfig() (err error) {
 	err = decoder.Decode(&AppConfig)
 	return
 }
+
+func init() {
+	err := InitConfig()
+	if err != nil {
+		panic("初始化项目配置失败")
+	}
+}

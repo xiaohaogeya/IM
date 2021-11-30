@@ -5,6 +5,7 @@ import (
 	"gin-im/conf"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
 	"time"
 )
 
@@ -13,7 +14,6 @@ var (
 )
 
 func init() {
-	_ = conf.InitConfig()
 	mysqlUser := conf.AppConfig.Database.User
 	mysqlPwd := conf.AppConfig.Database.Password
 	mysqlPort := conf.AppConfig.Database.Port
@@ -45,7 +45,7 @@ func init() {
 
 		// SetConnMaxLifetime 设置了连接可复用的最大时间。
 		sqlDB.SetConnMaxLifetime(time.Hour)
-
+		log.Println("数据库连接成功")
 	} else {
 		panic("数据库连接失败")
 	}
