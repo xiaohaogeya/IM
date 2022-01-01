@@ -5,6 +5,7 @@ import (
 	"gin-im/conf"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 	"log"
 	"time"
 )
@@ -33,7 +34,15 @@ func init() {
 		mysqlCharset,
 	)
 
-	if db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{}); err == nil {
+	if db, err := gorm.Open(
+		mysql.Open(dsn),
+		&gorm.Config{
+			NamingStrategy: schema.NamingStrategy{
+				TablePrefix: "t_",
+				SingularTable: true,
+			},
+		});
+		err == nil {
 		DB = db
 		sqlDB, _ := DB.DB()
 

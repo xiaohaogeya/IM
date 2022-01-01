@@ -2,8 +2,8 @@ package auth
 
 import (
 	"errors"
+	"gin-im/app/models"
 	"gin-im/conf"
-	"gin-im/models"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )
@@ -26,7 +26,7 @@ func init() {
 // GenerateToken 获取jwt token
 func GenerateToken(user *models.User) (tokenString string, err error) {
 	mySigningKey := []byte(SecretKey)
-	expireAt := time.Now().Add(time.Second * ExpireAt).Unix()
+	expireAt := time.Now().Add(ExpireAt).Unix()
 	newUser := *user
 	claims := MyCustomClaims{
 		newUser,

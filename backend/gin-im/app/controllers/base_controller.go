@@ -20,3 +20,14 @@ func (c *BaseController) Error(ctx *gin.Context, code string) {
 	msg := errMsg.String(code)
 	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"msg": msg, "code": code, "data": ""})
 }
+
+// AsController 模拟 Django框架的as_view()方法
+//func (c *BaseController) AsController(ctx *gin.Context) {
+//	c.ctx = ctx
+//	method := ctx.Request.Method
+//	rVal := reflect.ValueOf(c)
+//	m := rVal.MethodByName(method)
+//	m.Call(nil)
+//}
+
+
