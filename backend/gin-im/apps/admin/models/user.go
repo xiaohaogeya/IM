@@ -1,18 +1,18 @@
 package models
 
 import (
-	"gin-im/rbac/models"
+	rbacModels "gin-im/apps/rbac/models"
 	"gin-im/utils"
 )
 
 // User 用户表
 type User struct {
 	Model
-	UserName    string        `gorm:"size:32;unique;not null" json:"username"`
-	Password    string        `json:"password"`
-	Status      uint          `gorm:"default:1;" json:"status"`
-	IsSuperUser bool          `gorm:"default:false;" json:"is_super_user"`
-	Roles       []models.Role `json:"roles" gorm:"many2many:user_roles"`
+	UserName    string            `gorm:"size:32;unique;not null" json:"username"`
+	Password    string            `json:"password"`
+	Status      uint              `gorm:"default:1;" json:"status"`
+	IsSuperUser bool              `gorm:"default:false;" json:"is_super_user"`
+	Roles       []rbacModels.Role `json:"roles" gorm:"many2many:user_roles"`
 }
 
 //func (User) TableName() string {

@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"gin-im/auth"
+	"gin-im/apps/admin/auth"
 	"gin-im/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"

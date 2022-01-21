@@ -1,6 +1,9 @@
 package routers
 
 import (
+	"gin-im/apps/admin"
+	"gin-im/apps/rbac"
+	"gin-im/apps/ws"
 	"gin-im/conf"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -24,23 +27,23 @@ func init() {
 	engine.Use(cors.New(defaultConfig))
 }
 
-// router router
-func router() *gin.Engine {
-	return engine
-}
-
 var (
 	g errgroup.Group
 )
 
+func router() {
+	ws.Router(engine)
+	admin.Router(engine)
+	rbac.Router(engine)
+}
+
 func Run() {
 
-	wsRouter()
-	userRouter()
+	router()
 
 	s := &http.Server{
 		Addr:           ":" + conf.AppConfig.AppPort,
-		Handler:        router(),
+		Handler:        engine,
 		ReadTimeout:    time.Duration(conf.AppConfig.ReadTimeout) * time.Second,
 		WriteTimeout:   time.Duration(conf.AppConfig.WriteTimeout) * time.Second,
 		MaxHeaderBytes: 1 << 20,

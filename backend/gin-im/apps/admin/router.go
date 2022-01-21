@@ -1,17 +1,17 @@
-package routers
+package admin
 
 import (
-	controllers2 "gin-im/app/controllers"
-	middlewares2 "gin-im/app/middlewares"
+	"gin-im/apps/admin/controllers"
+	"gin-im/apps/admin/middlewares"
+	"github.com/gin-gonic/gin"
 )
 
 var (
-	userController = controllers2.UserController{}
-	authMiddleware = middlewares2.AuthMiddleware{}
+	userController = controllers.UserController{}
+	authMiddleware = middlewares.AuthMiddleware{}
 )
 
-func userRouter() {
-	r := router()
+func Router(r *gin.Engine) {
 	userRouter := r.Group("/user")
 	userRouter.POST("/login", userController.Login)
 	userRouter.POST("/register", userController.Register)

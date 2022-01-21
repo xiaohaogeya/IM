@@ -2,7 +2,7 @@ package auth
 
 import (
 	"errors"
-	"gin-im/app/models"
+	"gin-im/apps/admin/models"
 	"gin-im/conf"
 	"github.com/dgrijalva/jwt-go"
 	"time"

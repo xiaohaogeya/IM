@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	models2 "gin-im/app/models"
-	"gin-im/auth"
+	"gin-im/apps/admin/auth"
+	"gin-im/apps/admin/models"
 	"gin-im/db"
 	"gin-im/utils"
 	"github.com/gin-gonic/gin"
@@ -24,7 +24,7 @@ func (c *UserController) Login(ctx *gin.Context) {
 		return
 	}
 
-	user := &models2.User{
+	user := &models.User{
 		UserName: form.UserName,
 	}
 	db.DB.Find(user)
@@ -63,7 +63,7 @@ func (c *UserController) Register(ctx *gin.Context) {
 		return
 	}
 
-	user := &models2.User{
+	user := &models.User{
 		UserName: form.UserName,
 	}
 	db.DB.Find(user)
@@ -83,11 +83,11 @@ func (c *UserController) Register(ctx *gin.Context) {
 		return
 	}
 
-	userProfile := models2.UserProfile{
-		UserId: user.ID,
+	userProfile := models.UserProfile{
+		UserId:   user.ID,
 		NickName: form.NickName,
-		Mobile: form.Mobile,
-		Email: form.Email,
+		Mobile:   form.Mobile,
+		Email:    form.Email,
 	}
 	db.DB.Create(&userProfile)
 	c.Success(ctx, gin.H{"user_id": user.ID})
