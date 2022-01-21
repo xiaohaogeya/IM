@@ -16,11 +16,13 @@ func (m *AuthMiddleware) CheckAuth(ctx *gin.Context) {
 	code := "400003"
 	errMsg := utils.ErrMsg{}
 	msg := errMsg.String(code)
+
 	if authorization == "" {
 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"msg": msg, "code": code, "data": ""})
 		return
 	}
 	user, err := auth.ValidateToken(authorization)
+
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"msg": err, "code": code, "data": ""})
 		return

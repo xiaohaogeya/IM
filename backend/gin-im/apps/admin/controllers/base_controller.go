@@ -21,6 +21,21 @@ func (c *BaseController) Error(ctx *gin.Context, code string) {
 	ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"msg": msg, "code": code, "data": ""})
 }
 
+// UserId 获取UserId
+func (c *BaseController) UserId(ctx *gin.Context) uint {
+	userId, exists := ctx.Get("userId")
+	if !exists {
+		c.Error(ctx, "400003")
+		return 0
+	}
+	newUserId, ok := userId.(uint)
+	if !ok {
+		c.Error(ctx, "400003")
+		return 0
+	}
+	return newUserId
+}
+
 // AsController 模拟 Django框架的as_view()方法
 //func (c *BaseController) AsController(ctx *gin.Context) {
 //	c.ctx = ctx

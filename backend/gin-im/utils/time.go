@@ -11,6 +11,10 @@ const (
 	timeFormat = "2006-01-02 15:04:05"
 )
 
+func (t *Time) GetNow() Time {
+	return Time(time.Now())
+}
+
 func (t *Time) UnmarshalJSON(data []byte) (err error) {
 	now, err := time.ParseInLocation(`"`+timeFormat+`"`, string(data), time.Local)
 	*t = Time(now)
@@ -38,4 +42,9 @@ func (t Time) Value() (driver.Value, error) {
 		return nil, nil
 	}
 	return time.Time(t), nil
+}
+
+func NewTime() *Time {
+	t := &Time{}
+	return t
 }

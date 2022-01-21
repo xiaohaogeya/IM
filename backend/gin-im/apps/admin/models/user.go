@@ -12,7 +12,8 @@ type User struct {
 	Password    string            `json:"password"`
 	Status      uint              `gorm:"default:1;" json:"status"`
 	IsSuperUser bool              `gorm:"default:false;" json:"is_super_user"`
-	Roles       []rbacModels.Role `json:"roles" gorm:"many2many:user_roles"`
+	LoginAt     utils.Time        `json:"login_at"`
+	Roles       []rbacModels.Role `gorm:"many2many:user_roles" json:"roles"`
 }
 
 //func (User) TableName() string {

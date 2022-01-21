@@ -46,19 +46,34 @@ func GenerateToken(user *models.User) (tokenString string, err error) {
 
 // ValidateToken 验证jwt token
 func ValidateToken(tokenString string) (user models.User, err error) {
-	token, err := jwt.ParseWithClaims(
+	token, _ := jwt.ParseWithClaims(
 		tokenString,
 		&MyCustomClaims{},
 		func(token *jwt.Token) (interface{}, error) {
 			return []byte(SecretKey), nil
 		})
-	if err != nil {
-		return user, err
-	}
-	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
+	if claims, ok := token.Claims.(*MyCustomClaims); ok {
 		user = claims.User
 	} else {
 		err = errors.New("validate tokenString failed")
 	}
 	return
 }
+
+//func ValidateToken(tokenString string) (user models.User, err error) {
+//	token, err := jwt.ParseWithClaims(
+//		tokenString,
+//		&MyCustomClaims{},
+//		func(token *jwt.Token) (interface{}, error) {
+//			return []byte(SecretKey), nil
+//		})
+//	if err != nil {
+//		return user, err
+//	}
+//	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
+//		user = claims.User
+//	} else {
+//		err = errors.New("validate tokenString failed")
+//	}
+//	return
+//}

@@ -4,7 +4,7 @@ package models
 type UserProfile struct {
 	Model
 	UserId    uint   `json:"user_id"`
-	User      User   `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	User      User   `json:"user" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;polymorphicValue:master"`
 	Age       uint   `gorm:"default:0;" json:"age"`
 	Mobile    string `gorm:"size:11;unique" json:"mobile"`
 	Email     string `gorm:"size:32;unique" json:"email"`
@@ -12,7 +12,3 @@ type UserProfile struct {
 	NickName  string `gorm:"size:32;" json:"nick_name"`
 }
 
-//
-//func (UserProfile) TableName() string {
-//	return "user_profile"
-//}

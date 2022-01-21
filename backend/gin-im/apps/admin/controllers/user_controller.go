@@ -33,9 +33,19 @@ func (c *UserController) Login(ctx *gin.Context) {
 		c.Error(ctx, "400002")
 		return
 	}
+	user.LoginAt = utils.NewTime().GetNow()
+	db.DB.Save(user)
+
+	userProfile := &models.UserProfile{UserId: user.ID}
+	db.DB.Find(userProfile)
 
 	token, _ := auth.GenerateToken(user)
-	c.Success(ctx, gin.H{"token": token})
+	c.Success(ctx, gin.H{
+		"token":        token,
+		"user_id":      user.ID,
+		"user_name":    user.UserName,
+		"user_profile": userProfile,
+	})
 }
 
 // Register 注册
@@ -95,6 +105,10 @@ func (c *UserController) Register(ctx *gin.Context) {
 
 // Profile 用户详情
 func (c *UserController) Profile(ctx *gin.Context) {
-	userId, _ := ctx.Get("userId")
-	c.Success(ctx, gin.H{"userId": userId})
+	userId := c.UserId(ctx)
+
+	userProfile := &models.UserProfile{UserId: userId}
+	db.DB.Joins("User").First(userProfile)
+
+	c.Success(ctx, userProfile)
 }

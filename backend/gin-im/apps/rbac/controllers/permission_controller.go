@@ -13,5 +13,5 @@ type PermissionController struct {
 func (c *PermissionController) Get(ctx *gin.Context) {
 	var permissionList []models.Permission
 	db.DB.Find(&permissionList)
-	c.Success(ctx, gin.H{"permissions": permissionList})
+	c.Success(ctx, permissionList)
 }
