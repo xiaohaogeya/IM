@@ -18,6 +18,8 @@ func init() {
 	errMsg["400005"] = "注册失败,请重新注册."
 	errMsg["400006"] = "手机号码格式错误,请重新输入."
 	errMsg["400007"] = "邮箱格式错误,请重新输入."
+	errMsg["400008"] = "数据库异常."
+	errMsg["400009"] = "数据解析失败."
 }
 
 func (m *ErrMsg) String(code string) string {

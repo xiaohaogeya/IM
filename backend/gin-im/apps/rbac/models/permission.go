@@ -8,6 +8,6 @@ type Permission struct {
 	Method      string       `json:"method"`
 	Title       string       `json:"title"`
 	Rule        string       `json:"rule"`
-	ParentId    uint         `json:"parent_id"`
-	Permissions []Permission `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;foreignkey:ParentId"`
+	ParentId    uint         `json:"parent_id,omitempty" gorm:"default:NULL;"`
+	Permissions []Permission `json:"-" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;foreignkey:ParentId;"`
 }

@@ -18,3 +18,8 @@ func (v *Validator) ValidateEmail(email string) bool {
 	rgx := regexp.MustCompile(reg)
 	return rgx.MatchString(email)
 }
+
+func NewValidator() *Validator {
+	validator := &Validator{}
+	return validator
+}

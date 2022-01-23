@@ -11,5 +11,9 @@ var (
 
 func Router(r *gin.Engine) {
 	rbacRouter := r.Group("/rbac")
-	rbacRouter.GET("/permission", permissionController.Get)
+	// 权限
+	rbacRouter.GET("/permission/*id", permissionController.GET)
+	rbacRouter.POST("/permission", permissionController.POST)
+	rbacRouter.PUT("/permission/:id", permissionController.PUT)
+	rbacRouter.DELETE("/permission/:id", permissionController.DELETE)
 }
