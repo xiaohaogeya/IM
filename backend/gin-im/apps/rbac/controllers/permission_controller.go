@@ -19,8 +19,8 @@ func (c *PermissionController) GET(ctx *gin.Context) {
 	id := ctx.Param("id")
 	var permissionList []models.Permission
 	if id != "/" {
-		newId := strings.TrimLeft(id, "/")
-		db.DB.Where("id=?", newId).Find(&permissionList)
+		id = strings.TrimLeft(id, "/")
+		db.DB.Where("id = ?", id).Find(&permissionList)
 	} else {
 		db.DB.Find(&permissionList)
 	}
@@ -52,7 +52,7 @@ func (c *PermissionController) PUT(ctx *gin.Context) {
 	}
 
 	permission := &models.Permission{}
-	if tx := db.DB.Model(&models.Permission{}).Where("id=?", id).Updates(data).First(permission); tx.Error != nil {
+	if tx := db.DB.Model(&models.Permission{}).Where("id = ?", id).Updates(data).First(permission); tx.Error != nil {
 		c.Error(ctx, "400008")
 		return
 	}
@@ -61,15 +61,22 @@ func (c *PermissionController) PUT(ctx *gin.Context) {
 
 func (c *PermissionController) DELETE(ctx *gin.Context) {
 	id := ctx.Param("id")
-	if tx := db.DB.Model(&models.Permission{}).Where("id=?", id).Delete(models.Permission{}); tx.Error != nil {
+	if tx := db.DB.Model(&models.Permission{}).Where("id = ?", id).Delete(models.Permission{}); tx.Error != nil {
 		c.Error(ctx, "400008")
 		return
 	}
 	c.Success(ctx, "")
 }
 
+// GET 默认过滤掉parent_id为空
 func (c *PermissionTreeController) GET(ctx *gin.Context) {
+	id := ctx.Param("id")
 	var permissionList []models.Permission
-	db.DB.Preload("Children").Where("parent_id is null").Find(&permissionList)
+	if id != "/" {
+		id = strings.TrimLeft(id, "/")
+		db.DB.Preload("Children").Where("parent_id is null").Where("id = ?", id).Find(&permissionList)
+	} else {
+		db.DB.Preload("Children").Where("parent_id is null").Find(&permissionList)
+	}
 	c.Success(ctx, permissionList)
 }

@@ -19,5 +19,5 @@ func Router(r *gin.Engine) {
 	rbacRouter.DELETE("/permission/:id", permissionController.DELETE)
 
 	// 权限树
-	rbacRouter.GET("/permission_tree", permissionTreeController.GET)
+	rbacRouter.GET("/permission_tree/*id", permissionTreeController.GET)
 }
