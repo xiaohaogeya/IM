@@ -11,6 +11,10 @@ type PermissionController struct {
 	BaseController
 }
 
+type PermissionTreeController struct {
+	BaseController
+}
+
 func (c *PermissionController) GET(ctx *gin.Context) {
 	id := ctx.Param("id")
 	var permissionList []models.Permission
@@ -62,4 +66,10 @@ func (c *PermissionController) DELETE(ctx *gin.Context) {
 		return
 	}
 	c.Success(ctx, "")
+}
+
+func (c *PermissionTreeController) GET(ctx *gin.Context) {
+	var permissionList []models.Permission
+	db.DB.Preload("Children").Where("parent_id is null").Find(&permissionList)
+	c.Success(ctx, permissionList)
 }

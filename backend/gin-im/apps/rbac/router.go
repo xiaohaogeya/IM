@@ -7,6 +7,7 @@ import (
 
 var (
 	permissionController = controllers.PermissionController{}
+	permissionTreeController = controllers.PermissionTreeController{}
 )
 
 func Router(r *gin.Engine) {
@@ -16,4 +17,7 @@ func Router(r *gin.Engine) {
 	rbacRouter.POST("/permission", permissionController.POST)
 	rbacRouter.PUT("/permission/:id", permissionController.PUT)
 	rbacRouter.DELETE("/permission/:id", permissionController.DELETE)
+
+	// 权限树
+	rbacRouter.GET("/permission_tree", permissionTreeController.GET)
 }

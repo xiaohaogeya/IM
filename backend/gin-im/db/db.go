@@ -41,6 +41,7 @@ func init() {
 				TablePrefix: "t_",
 				SingularTable: true,
 			},
+			//Logger: logger.Default.LogMode(logger.Info),
 		});
 		err == nil {
 		DB = db
