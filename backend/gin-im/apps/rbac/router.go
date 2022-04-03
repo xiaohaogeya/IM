@@ -8,6 +8,7 @@ import (
 var (
 	permissionController = controllers.PermissionController{}
 	permissionTreeController = controllers.PermissionTreeController{}
+	roleController = controllers.RoleController{}
 )
 
 func Router(r *gin.Engine) {
@@ -20,4 +21,7 @@ func Router(r *gin.Engine) {
 
 	// 权限树
 	rbacRouter.GET("/permission_tree/*id", permissionTreeController.GET)
+
+	// 角色
+	rbacRouter.GET("/role/*id", roleController.GET)
 }
