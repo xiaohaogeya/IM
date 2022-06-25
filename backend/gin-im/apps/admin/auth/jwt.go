@@ -2,37 +2,39 @@ package auth
 
 import (
 	"errors"
-	"gin-im/apps/admin/models"
 	"gin-im/conf"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )
 
 type MyCustomClaims struct {
-	models.User
+	UserID   uint
+	UserName string
 	jwt.StandardClaims
 }
 
 var (
 	ExpireAt  time.Duration // 过期30天
 	SecretKey string        // 密钥
+	Issuer    string        // 签发者
 )
 
 func init() {
-	ExpireAt = time.Hour * 24 * time.Duration(conf.AppConfig.JWT.ExpireAt) // 过期30天
-	SecretKey = conf.AppConfig.SecretKey                                   // 密钥
+	ExpireAt = time.Hour * 24 * time.Duration(conf.AppConfig.JWT.ExpireAt) // 默认过期30天
+	Issuer = conf.AppConfig.JWT.Issuer
+	SecretKey = conf.AppConfig.SecretKey
 }
 
 // GenerateToken 获取jwt token
-func GenerateToken(user *models.User) (tokenString string, err error) {
+func GenerateToken(userId uint, username string) (tokenString string, err error) {
 	mySigningKey := []byte(SecretKey)
 	expireAt := time.Now().Add(ExpireAt).Unix()
-	newUser := *user
 	claims := MyCustomClaims{
-		newUser,
+		userId,
+		username,
 		jwt.StandardClaims{
 			ExpiresAt: expireAt,
-			Issuer:    string(rune(user.ID)),
+			Issuer:    Issuer,
 			IssuedAt:  time.Now().Unix(),
 		},
 	}
@@ -45,15 +47,16 @@ func GenerateToken(user *models.User) (tokenString string, err error) {
 }
 
 // ValidateToken 验证jwt token
-func ValidateToken(tokenString string) (user models.User, err error) {
+func ValidateToken(tokenString string) (userId uint, username string, err error) {
 	token, _ := jwt.ParseWithClaims(
 		tokenString,
 		&MyCustomClaims{},
 		func(token *jwt.Token) (interface{}, error) {
 			return []byte(SecretKey), nil
 		})
-	if claims, ok := token.Claims.(*MyCustomClaims); ok {
-		user = claims.User
+	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
+		userId = claims.UserID
+		username = claims.UserName
 	} else {
 		err = errors.New("validate tokenString failed")
 	}

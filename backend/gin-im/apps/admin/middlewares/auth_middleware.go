@@ -21,14 +21,13 @@ func (m *AuthMiddleware) CheckAuth(ctx *gin.Context) {
 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"msg": msg, "code": code, "data": ""})
 		return
 	}
-	user, err := auth.ValidateToken(authorization)
-
-	if err != nil {
+	userId, username, err := auth.ValidateToken(authorization)
+	if err != nil || userId == 0 {
 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"msg": err, "code": code, "data": ""})
 		return
 	}
 
-	ctx.Set("userId", user.ID)
-	ctx.Set("userName", user.UserName)
+	ctx.Set("userId", userId)
+	ctx.Set("userName", username)
 	ctx.Next()
 }

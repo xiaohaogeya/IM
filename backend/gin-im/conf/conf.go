@@ -43,7 +43,8 @@ type RedisConfig struct {
 
 // JWT  属性定义
 type JWT struct {
-	ExpireAt int `json:"expire_at"`
+	ExpireAt int    `json:"expire_at"`
+	Issuer   string `json:"issuer"`
 }
 
 var AppConfig *Config

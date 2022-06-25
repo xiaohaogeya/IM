@@ -39,7 +39,7 @@ func (c *UserController) Login(ctx *gin.Context) {
 	userProfile := &models.UserProfile{UserId: user.ID}
 	db.DB.Find(userProfile)
 
-	token, _ := auth.GenerateToken(user)
+	token, _ := auth.GenerateToken(user.ID, user.UserName)
 	c.Success(ctx, gin.H{
 		"token":        token,
 		"user_id":      user.ID,
