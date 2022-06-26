@@ -9,7 +9,7 @@ import (
 type User struct {
 	Model
 	UserName    string            `gorm:"size:32;unique;not null" json:"username"`
-	Password    string            `json:"password"`
+	Password    string            `json:"-"`
 	Status      uint              `gorm:"default:1;" json:"status"`
 	IsSuperUser bool              `gorm:"default:false;" json:"is_super_user"`
 	LoginAt     utils.Time        `json:"login_at"`

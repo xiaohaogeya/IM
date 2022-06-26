@@ -27,7 +27,7 @@ func (c *UserController) Login(ctx *gin.Context) {
 	user := &models.User{
 		UserName: form.UserName,
 	}
-	db.DB.Find(user)
+	db.DB.Where(user).First(user)
 
 	if user.ID == 0 || !user.ValidatePassword(form.Password) {
 		c.Error(ctx, "400002")
@@ -36,15 +36,11 @@ func (c *UserController) Login(ctx *gin.Context) {
 	user.LoginAt = utils.NewTime().GetNow()
 	db.DB.Save(user)
 
-	userProfile := &models.UserProfile{UserId: user.ID}
-	db.DB.Find(userProfile)
-
 	token, _ := auth.GenerateToken(user.ID, user.UserName)
 	c.Success(ctx, gin.H{
 		"token":        token,
 		"user_id":      user.ID,
 		"user_name":    user.UserName,
-		"user_profile": userProfile,
 	})
 }
 
@@ -76,7 +72,7 @@ func (c *UserController) Register(ctx *gin.Context) {
 	user := &models.User{
 		UserName: form.UserName,
 	}
-	db.DB.Find(user)
+	db.DB.Where(user).First(user)
 
 	if user.ID != 0 {
 		c.Error(ctx, "400004")
@@ -86,20 +82,30 @@ func (c *UserController) Register(ctx *gin.Context) {
 	password := form.Password
 	password = user.MakePassword(password)
 	user.Password = password
-	db.DB.Create(user)
 
-	if user.ID == 0 {
+	// 事务
+	tx := db.DB.Begin()
+	if err := tx.Create(user).Error; err != nil {
+		// 返回任何错误都会回滚事务
+		tx.Rollback()
 		c.Error(ctx, "400005")
 		return
 	}
 
-	userProfile := models.UserProfile{
+	userProfile := &models.UserProfile{
 		UserId:   user.ID,
 		NickName: form.NickName,
 		Mobile:   form.Mobile,
 		Email:    form.Email,
 	}
-	db.DB.Create(&userProfile)
+	if err := tx.Create(userProfile).Error; err != nil {
+		// 返回任何错误都会回滚事务
+		tx.Rollback()
+		c.Error(ctx, "400005")
+		return
+	}
+	// 提交事务
+	tx.Commit()
 	c.Success(ctx, gin.H{"user_id": user.ID})
 }
 
@@ -108,7 +114,7 @@ func (c *UserController) Profile(ctx *gin.Context) {
 	userId := c.UserId(ctx)
 
 	userProfile := &models.UserProfile{UserId: userId}
-	db.DB.Joins("User").First(userProfile)
+	db.DB.Joins("User").Where(userProfile).First(userProfile)
 
 	c.Success(ctx, userProfile)
 }
