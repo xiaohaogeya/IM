@@ -13,7 +13,7 @@ var (
 	authMiddleware           = middlewares.AuthMiddleware{}
 )
 
-func Router(r *gin.Engine) {
+func Router(r *gin.RouterGroup) {
 	rbacRouter := r.Group("/rbac")
 	rbacRouter.Use(authMiddleware.CheckAuth)
 	// 权限

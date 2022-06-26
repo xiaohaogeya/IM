@@ -11,7 +11,7 @@ var (
 	authMiddleware = middlewares.AuthMiddleware{}
 )
 
-func Router(r *gin.Engine) {
+func Router(r *gin.RouterGroup) {
 	userRouter := r.Group("/user")
 	userRouter.POST("/login", userController.Login)
 	userRouter.POST("/register", userController.Register)

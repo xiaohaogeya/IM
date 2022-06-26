@@ -32,9 +32,10 @@ var (
 )
 
 func router() {
-	ws.Router(engine)
-	admin.Router(engine)
-	rbac.Router(engine)
+	api := engine.Group("/api")
+	ws.Router(api)
+	admin.Router(api)
+	rbac.Router(api)
 }
 
 func Run() {
