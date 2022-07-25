@@ -5,6 +5,7 @@ import (
 	"gin-im/apps/rbac"
 	"gin-im/apps/ws"
 	"gin-im/conf"
+	"gin-im/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
@@ -16,7 +17,7 @@ import (
 var engine *gin.Engine
 
 func init() {
-	gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(conf.AppConfig.AppModel)
 	engine = gin.Default()
 	// 跨域
 	defaultConfig := cors.DefaultConfig()
@@ -32,7 +33,15 @@ var (
 )
 
 func router() {
+	// 没有路由即 404返回
+	engine.NoRoute(func(g *gin.Context) {
+		errMsg := utils.ErrMsg{}
+		code := "400000"
+		msg := errMsg.String(code)
+		g.AbortWithStatusJSON(http.StatusNotFound, gin.H{"msg": msg, "code": code})
+	})
 	api := engine.Group("/api")
+
 	ws.Router(api)
 	admin.Router(api)
 	rbac.Router(api)

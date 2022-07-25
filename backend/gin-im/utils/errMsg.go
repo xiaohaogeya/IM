@@ -11,6 +11,7 @@ var errMsg = make(map[string]string)
 
 // 初始化错误信息映射
 func init() {
+	errMsg["400000"] = "暂无该路由."
 	errMsg["400001"] = "缺少必要的参数或参数格式错误."
 	errMsg["400002"] = "用户名或密码错误,请重新输入."
 	errMsg["400003"] = "权限认证失败,请前去登录."
