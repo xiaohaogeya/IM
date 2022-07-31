@@ -3,8 +3,9 @@ package middlewares
 import (
 	"gin-im/apps/admin/auth"
 	"gin-im/utils"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type AuthMiddleware struct {
@@ -23,10 +24,9 @@ func (m *AuthMiddleware) CheckAuth(ctx *gin.Context) {
 	}
 	userId, username, err := auth.ValidateToken(authorization)
 	if err != nil || userId == 0 {
-		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"msg": err, "code": code, "data": ""})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"msg": msg, "code": code, "data": ""})
 		return
 	}
-
 	ctx.Set("userId", userId)
 	ctx.Set("userName", username)
 	ctx.Next()
